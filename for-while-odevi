@@ -1,0 +1,22 @@
+<?php
+
+
+function ucgen($satir_sayisi)
+{
+
+    $satir = 1;
+    while ($satir <= $satir_sayisi) {
+
+        for ($i = 1; $i <= $satir; $i++) {
+            echo "O ";
+        }
+
+        echo "<br>";
+
+        $satir++;
+    }
+}
+
+
+ucgen(15);
+
