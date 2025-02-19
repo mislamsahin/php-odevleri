@@ -1,0 +1,39 @@
+<?php
+
+echo '<pre>';
+function temizVeRastgele($dizi, $adet, $seed) {
+    // Rastgeleliği sabitlemek için seed kullanıyoruz
+    srand($seed);
+
+    // Boş stringleri ve NULL değerleri temizle
+    $temizDizi = array_values(array_filter($dizi, function ($eleman) {
+        return $eleman !== "" && $eleman !== null;
+    }));
+
+    // Eğer istenen eleman sayısı diziden büyükse, maksimum alabileceğimiz kadar al
+    $adet = min($adet, count($temizDizi));
+
+    // Rastgele indeksleri seç
+    $rastgeleIndeksler = array_rand($temizDizi, $adet);
+
+    // Eğer tek bir eleman seçilmişse array_rand integer döndürür, diziye çeviriyoruz
+    if (!is_array($rastgeleIndeksler)) {
+        $rastgeleIndeksler = [$rastgeleIndeksler];
+    }
+
+    // Seçilen indekslere karşılık gelen elemanları döndür
+    return array_map(function ($index) use ($temizDizi) {
+        return $temizDizi[$index];
+    }, $rastgeleIndeksler);
+}
+
+// Test verisi
+$planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "", "", NULL];
+
+// Sabit rastgelelik sağlamak için farklı seed değerleri kullanıyoruz
+print_r(temizVeRastgele($planets, 2, 1));
+print_r(temizVeRastgele($planets, 3, 2));
+print_r(temizVeRastgele($planets, 2, 3));
+print_r(temizVeRastgele($planets, 4, 4));
+print_r(temizVeRastgele($planets, 5, 5));
+?>
